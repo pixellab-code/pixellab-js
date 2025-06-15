@@ -1,7 +1,7 @@
 # PixelLab JavaScript SDK
 
 [![npm version](https://badge.fury.io/js/@pixellab-code%2Fpixellab.svg)](https://badge.fury.io/js/@pixellab-code%2Fpixellab)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-16%2B-green.svg)](https://nodejs.org/)
 
 This JavaScript/Node.js client simplifies interaction with the [PixelLab developer API](http://api.pixellab.ai/v1).
 
@@ -144,7 +144,7 @@ Add to your MCP client configuration:
 
 ### Prerequisites
 
-- Node.js 18 or higher
+- Node.js 16 or higher
 - npm or yarn
 
 ### Setup

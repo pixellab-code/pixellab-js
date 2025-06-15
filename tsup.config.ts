@@ -5,5 +5,5 @@ export default defineConfig({
   format: ["cjs"],
   dts: true,
   clean: true,
-  target: "node18",
+  target: "node16",
 });

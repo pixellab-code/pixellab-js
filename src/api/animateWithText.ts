@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { fetch } from "../utils/fetch";
 import {
   Base64Image,
   ImageSize,
@@ -9,6 +10,12 @@ import {
   CameraViewSchema,
   Direction,
   DirectionSchema,
+  Outline,
+  OutlineSchema,
+  Shading,
+  ShadingSchema,
+  Detail,
+  DetailSchema,
 } from "../types.js";
 import { handleHttpError, ValidationError } from "../errors.js";
 import type { PixelLabClient } from "../client.js";

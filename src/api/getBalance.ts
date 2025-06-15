@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { handleHttpError, ValidationError } from "../errors.js";
 import type { PixelLabClient } from "../client.js";
+import { fetch } from "../utils/fetch";
 
 export interface GetBalanceResponse {
   type: "usd";

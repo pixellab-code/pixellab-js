@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { fetch } from "../utils/fetch";
 import {
   Base64Image,
   ImageSize,
@@ -11,6 +12,12 @@ import {
   CameraViewSchema,
   Direction,
   DirectionSchema,
+  Outline,
+  OutlineSchema,
+  Shading,
+  ShadingSchema,
+  Detail,
+  DetailSchema,
 } from "../types.js";
 import { handleHttpError, ValidationError } from "../errors.js";
 import type { PixelLabClient } from "../client.js";
@@ -75,11 +82,13 @@ const AnimateWithSkeletonParamsSchema = z.object({
 });
 
 const AnimateWithSkeletonResponseSchema = z.object({
-  images: z.array(z.object({
-    type: z.literal("base64"),
-    base64: z.string(),
-    format: z.string().optional().default("png"),
-  })),
+  images: z.array(
+    z.object({
+      type: z.literal("base64"),
+      base64: z.string(),
+      format: z.string().optional().default("png"),
+    })
+  ),
   usage: AnimateWithSkeletonUsageSchema,
 });
 
@@ -99,16 +108,16 @@ export async function animateWithSkeleton(
     isometric: validatedParams.isometric,
     oblique_projection: validatedParams.obliqueProjection,
     init_images: validatedParams.initImages
-      ? validatedParams.initImages.map(img => img.modelDump())
+      ? validatedParams.initImages.map((img) => img.modelDump())
       : null,
     init_image_strength: validatedParams.initImageStrength,
     skeleton_keypoints: validatedParams.skeletonKeypoints,
     reference_image: validatedParams.referenceImage?.modelDump() || null,
     inpainting_images: validatedParams.inpaintingImages
-      ? validatedParams.inpaintingImages.map(img => img?.modelDump() || null)
+      ? validatedParams.inpaintingImages.map((img) => img?.modelDump() || null)
       : null,
     mask_images: validatedParams.maskImages
-      ? validatedParams.maskImages.map(img => img?.modelDump() || null)
+      ? validatedParams.maskImages.map((img) => img?.modelDump() || null)
       : null,
     color_image: validatedParams.colorImage?.modelDump() || null,
     seed: validatedParams.seed,
@@ -132,7 +141,9 @@ export async function animateWithSkeleton(
     const parsedResponse = AnimateWithSkeletonResponseSchema.parse(data);
 
     return {
-      images: parsedResponse.images.map(imageData => Base64Image.fromData(imageData)),
+      images: parsedResponse.images.map((imageData) =>
+        Base64Image.fromData(imageData)
+      ),
       usage: parsedResponse.usage,
     };
   } catch (error) {
@@ -141,4 +152,4 @@ export async function animateWithSkeleton(
     }
     throw error;
   }
-} 
+}

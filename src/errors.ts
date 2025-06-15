@@ -1,7 +1,11 @@
 import { z } from "zod";
+import { Response } from "./utils/fetch";
 
 export class PixelLabError extends Error {
-  constructor(message: string, public code?: string) {
+  constructor(
+    message: string,
+    public code?: string
+  ) {
     super(message);
     this.name = "PixelLabError";
   }
@@ -15,7 +19,10 @@ export class AuthenticationError extends PixelLabError {
 }
 
 export class ValidationError extends PixelLabError {
-  constructor(message: string, public validationErrors?: z.ZodError) {
+  constructor(
+    message: string,
+    public validationErrors?: z.ZodError
+  ) {
     super(message, "VALIDATION_ERROR");
     this.name = "ValidationError";
   }
@@ -29,7 +36,10 @@ export class RateLimitError extends PixelLabError {
 }
 
 export class HttpError extends PixelLabError {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number
+  ) {
     super(message, "HTTP_ERROR");
     this.name = "HttpError";
   }
@@ -43,7 +53,10 @@ export async function handleHttpError(response: Response): Promise<never> {
     // Ignore JSON parsing errors
   }
 
-  const message = errorData.detail || errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+  const message =
+    errorData.detail ||
+    errorData.message ||
+    `HTTP ${response.status}: ${response.statusText}`;
 
   switch (response.status) {
     case 401:
@@ -55,4 +68,4 @@ export async function handleHttpError(response: Response): Promise<never> {
     default:
       throw new HttpError(message, response.status);
   }
-} 
+}

@@ -32,11 +32,13 @@
   "license": "MIT",
   "dependencies": {
     "zod": "^3.22.4",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",
-    "@types/node": "^20.9.0",
+    "@types/node": "^16.18.0",
+    "@types/node-fetch": "^2.6.9",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.54.0",
@@ -47,6 +49,6 @@
     "typescript": "^5.2.2"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=16.0.0"
   }
 }

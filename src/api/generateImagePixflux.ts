@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { fetch } from "../utils/fetch";
 import {
   Base64Image,
   Base64ImageData,

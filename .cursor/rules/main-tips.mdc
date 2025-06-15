@@ -1,0 +1,114 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# PixelLab JavaScript SDK - Development Guidelines
+
+## Core Principles
+- **Mirror Python Structure**: Keep the same API surface and structure as `pixellab-python/`
+- **Node.js Primary**: Currently Node.js focused (uses Buffer, fs, native fetch)
+- **TypeScript**: Full type safety with Zod validation
+- **nvm**: Use Node Version Manager for consistent Node.js versions
+
+## Current Implementation Status ✅
+
+### API Methods (8/8 Complete)
+All Python methods implemented with JavaScript naming conventions:
+- `generate_image_pixflux` → `generateImagePixflux` ✅
+- `generate_image_bitforge` → `generateImageBitforge` ✅  
+- `get_balance` → `getBalance` ✅
+- `animate_with_skeleton` → `animateWithSkeleton` ✅
+- `animate_with_text` → `animateWithText` ✅
+- `estimate_skeleton` → `estimateSkeleton` ✅
+- `inpaint` → `inpaint` ✅
+- `rotate` → `rotate` ✅
+
+### Core Components ✅
+- **Client**: `PixelLabClient` class with `fromEnv()`, `fromEnvFile()` factory methods
+- **Models**: `Base64Image`, `ImageSize`, `Keypoint` (with Node.js Buffer support)
+- **Types**: All literal types (`CameraView`, `Direction`, `Outline`, `Shading`, `Detail`, `SkeletonLabel`)
+- **Errors**: Custom error classes (`AuthenticationError`, `ValidationError`, `RateLimitError`, `HttpError`)
+- **Testing**: Complete test suite with rate limit retry logic
+
+## Browser Support - TODO ⚠️
+Currently **Node.js only** due to:
+- `Buffer` usage in Base64Image
+- `fs.promises` for file I/O
+- Node.js specific imports
+
+### To Add Browser Support:
+1. Create platform-specific Base64Image implementations
+2. Use web-compatible APIs (Uint8Array, Blob, File API)
+3. Conditional imports for Node.js vs Browser
+4. Update build to support both CJS and ESM
+
+## Key Architectural Decisions
+
+### Naming Convention
+- **Python**: `snake_case` (e.g., `generate_image_pixflux`)
+- **JavaScript**: `camelCase` (e.g., `generateImagePixflux`)
+- **Rationale**: Follow JavaScript conventions while maintaining API compatibility
+
+### Type Safety
+- **Zod validation** for all inputs/outputs
+- **TypeScript interfaces** mirror Python Pydantic models
+- **Runtime validation** prevents API errors
+
+### Error Handling
+- **Custom error classes** for different error types
+- **HTTP status code mapping** (401→AuthenticationError, 422→ValidationError, etc.)
+- **Rate limit retry** with exponential backoff
+
+### Headers
+- **Python**: Only `Authorization: Bearer {secret}` in `headers()`
+- **JavaScript**: Same approach, add `Content-Type: application/json` per request
+- **Removed**: User-Agent header to match Python exactly
+
+## Testing Strategy
+- **Serial execution**: `maxWorkers: 1` to avoid rate limits
+- **Retry logic**: Exponential backoff for rate limit errors
+- **Integration tests**: Real API calls with actual image generation
+- **Environment isolation**: Uses `.env.development.secrets`
+
+## Missing Features (Intentionally Removed)
+- ❌ **CLI functionality** (removed - not in Python)
+- ❌ **MCP server** (removed - not in Python)  
+- ❌ **auth_headers()** method (unused in Python, not implemented)
+
+## Development Commands
+```bash
+npm run build    # Build TypeScript to dist/
+npm test         # Run tests serially
+npm run dev      # Watch mode for development
+```
+
+## File Structure
+```
+src/
+├── client.ts           # Main PixelLabClient class
+├── index.ts           # Public exports
+├── settings.ts        # Environment configuration
+├── errors.ts          # Custom error classes
+├── types.ts           # All literal types with Zod schemas
+├── models/            # Core models
+│   ├── base64Image.ts # Image handling with Buffer support
+│   ├── imageSize.ts   # Image dimensions
+│   └── keypoint.ts    # Skeleton points
+└── api/               # API method implementations
+    ├── generateImagePixflux.ts
+    ├── generateImageBitforge.ts
+    ├── animateWithSkeleton.ts
+    ├── animateWithText.ts
+    ├── estimateSkeleton.ts
+    ├── getBalance.ts
+    ├── inpaint.ts
+    └── rotate.ts
+```
+
+## Future Considerations
+1. **Browser support**: Platform-specific implementations
+2. **ESM support**: Currently CJS only
+3. **Bundle size**: Consider tree-shaking optimizations
+4. **Streaming**: For large image responses
+5. **Caching**: For frequently used images

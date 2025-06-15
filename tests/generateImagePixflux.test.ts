@@ -14,7 +14,7 @@ describe("Generate Image Pixflux", () => {
         noBackground: false,
         textGuidanceScale: 8.0,
       });
-    });
+    }, 5, 3000); // 5 retries with 3 second base delay
 
     // Verify we got a valid response
     expect(response.image).toBeDefined();
@@ -40,5 +40,5 @@ describe("Generate Image Pixflux", () => {
     // Verify file was created
     const stats = await fs.stat(outputPath);
     expect(stats.size).toBeGreaterThan(0);
-  });
+  }, 180000); // 3 minute timeout
 });

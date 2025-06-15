@@ -29,7 +29,9 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm install
+          npm audit fix --force || true
 
       - name: Create .env.development.secrets
         run: |

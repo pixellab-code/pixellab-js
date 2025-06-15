@@ -1,19 +1,34 @@
 {
-  "name": "pixellab",
+  "name": "@pixellab-code/pixellab",
   "version": "1.0.0",
-  "description": "JavaScript client for Pixel Lab API",
+  "description": "JavaScript/TypeScript client for Pixel Lab API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixellab-code/pixellab-js.git"
+  },
+  "homepage": "https://github.com/pixellab-code/pixellab-js#readme",
+  "bugs": {
+    "url": "https://github.com/pixellab-code/pixellab-js/issues"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint src --ext .ts",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": ["pixellab", "api", "image", "generation"],
-  "author": "",
+  "keywords": ["pixellab", "api", "image", "generation", "ai", "typescript"],
+  "author": "Pixel Lab",
   "license": "MIT",
   "dependencies": {
     "zod": "^3.22.4",

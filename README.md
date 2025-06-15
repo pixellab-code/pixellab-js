@@ -1,6 +1,6 @@
 # PixelLab JavaScript SDK
 
-[![npm version](https://badge.fury.io/js/pixellab.svg)](https://badge.fury.io/js/pixellab)
+[![npm version](https://badge.fury.io/js/@pixellab-code%2Fpixellab.svg)](https://badge.fury.io/js/@pixellab-code%2Fpixellab)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 
 This JavaScript/Node.js client simplifies interaction with the [PixelLab developer API](http://api.pixellab.ai/v1).
@@ -17,20 +17,19 @@ For questions or discussions, join us on [Discord](https://discord.gg/pBeyTBF8T7
 - **Animation with Text**: Animate with text prompts
 - **Inpainting**: Edit existing pixel art
 - **Rotation**: Generate rotated views of characters and objects
-- **MCP Server**: Model Context Protocol server for AI assistant integration
 
 With much more functionality coming soon.
 
 ## Installation
 
 ```bash
-npm install pixellab
+npm install @pixellab-code/pixellab
 ```
 
 Or install globally for CLI usage:
 
 ```bash
-npm install -g pixellab
+npm install -g @pixellab-code/pixellab
 ```
 
 ## Usage
@@ -38,11 +37,11 @@ npm install -g pixellab
 ### Basic Usage
 
 ```javascript
-import { Client } from "pixellab";
+import { PixelLabClient } from "@pixellab-code/pixellab";
 
-const client = Client.fromEnv();
-// Or: const client = Client.fromEnvFile(".env.development.secrets");
-// Or: const client = new Client("your-secret-key");
+const client = PixelLabClient.fromEnv();
+// Or: const client = PixelLabClient.fromEnvFile(".env.development.secrets");
+// Or: const client = new PixelLabClient("your-secret-key");
 
 // Generate image
 const response = await client.generateImagePixflux({
@@ -99,7 +98,7 @@ const response = await client.generateImagePixflux({
 #### Generate Image (Bitforge)
 
 ```javascript
-import { Base64Image } from "pixellab";
+import { Base64Image } from "@pixellab-code/pixellab";
 
 const styleImage = await Base64Image.fromFile("style.png");
 
@@ -152,7 +151,7 @@ Add to your MCP client configuration:
 
 ```bash
 # Clone the repository
-git clone https://github.com/pixellab/pixellab-js.git
+git clone https://github.com/pixellab-code/pixellab-js.git
 cd pixellab-js
 
 # Install dependencies
@@ -176,9 +175,8 @@ pixellab-js/
 │   ├── api/               # API method implementations
 │   ├── errors.ts          # Error classes
 │   ├── settings.ts        # Configuration
-│   └── cli.ts             # CLI interface
+│   └── index.ts           # Main exports
 ├── tests/                 # Test files
-├── bin/                   # Executable scripts
 └── dist/                  # Compiled output
 ```
 

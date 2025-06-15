@@ -26,12 +26,6 @@ With much more functionality coming soon.
 npm install @pixellab-code/pixellab
 ```
 
-Or install globally for CLI usage:
-
-```bash
-npm install -g @pixellab-code/pixellab
-```
-
 ## Usage
 
 ### Basic Usage
@@ -63,19 +57,6 @@ Create a `.env` file or set environment variables:
 ```bash
 PIXELLAB_SECRET=your-secret-key-here
 PIXELLAB_BASE_URL=https://api.pixellab.ai/v1  # Optional
-```
-
-### CLI Usage
-
-```bash
-# Generate an image
-pixellab generate -d "cute dragon" -w 64 -h 64 -o dragon.png
-
-# Check account balance
-pixellab balance
-
-# Start MCP server
-pixellab mcp
 ```
 
 ### API Methods
@@ -116,28 +97,6 @@ const response = await client.generateImageBitforge({
 ```javascript
 const balance = await client.getBalance();
 console.log(`Balance: ${balance.balance} ${balance.currency}`);
-```
-
-### MCP Server
-
-The library includes a Model Context Protocol (MCP) server for integration with AI assistants like Claude Desktop.
-
-```bash
-# Start MCP server
-npx pixellab mcp
-```
-
-Add to your MCP client configuration:
-
-```json
-{
-  "mcpServers": {
-    "pixellab": {
-      "command": "npx",
-      "args": ["pixellab", "mcp"]
-    }
-  }
-}
 ```
 
 ## Development
